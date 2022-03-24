@@ -1,0 +1,1041 @@
+env:
+  browser: true
+  es6: true
+
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+  - plugin:react-hooks/recommended
+  - plugin:import/recommended
+  - plugin:import/react
+  - plugin:import/typescript
+  - plugin:jsx-a11y/recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - plugin:es/restrict-to-es2016
+  - prettier
+
+ignorePatterns:
+  - build/
+  - "*.module.css.d.ts"
+
+parserOptions:
+  ecmaVersion: 2015
+  # Enables linting with type checking. Consumers might have to redefine this if
+  # the config filename differs.
+  # See https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/TYPED_LINTING.md
+  project:
+    - ./tsconfig.json
+
+reportUnusedDisableDirectives: true
+
+settings:
+  # Components used as alternatives to <a> for linking, eg. <Link to={ url } />
+  # See:
+  # - https://github.com/yannickcr/eslint-plugin-react/blob/master/README.md#configuration
+  # - https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md#custom-link-components
+  linkComponents:
+    - name: Link
+      linkAttribute: to
+  react:
+    version: detect # This will be the default in a future version of eslint-plugin-react
+
+overrides:
+  # These configuration files are simple JS files loading shared configurations
+  # (unless modified). They are not TS and therefore must use CommonJS.
+  - files:
+      - "*.config.js"
+    extends: ./config-file-js.yml
+
+  # These configuration files are simple TS files loading shared configurations
+  # (unless modified). They are TS and therefore must use ES Modules.
+  - files: "*.config.ts"
+    extends: ./config-file-ts.yml
+
+rules:
+  ############
+  ## eslint ##
+  ############
+
+  ## Possible Errors
+  ## https://eslint.org/docs/rules/#possible-errors
+
+  # Disallow `await` inside of loops
+  # https://eslint.org/docs/rules/no-await-in-loop
+  no-await-in-loop: error
+
+  # Disallow the use of `console`
+  # https://eslint.org/docs/rules/no-console
+  no-console: error
+
+  # Disallow template literal placeholder syntax in regular strings
+  # https://eslint.org/docs/rules/no-template-curly-in-string
+  no-template-curly-in-string: error
+
+  # Disallow assignments that can lead to race conditions due to usage of `await` or `yield`
+  # https://eslint.org/docs/rules/require-atomic-updates
+  require-atomic-updates: error
+
+  ## Best Practices
+  ## https://eslint.org/docs/rules/#best-practices
+
+  # Enforce getter and setter pairs in objects and classes
+  # https://eslint.org/docs/rules/accessor-pairs
+  accessor-pairs: error
+
+  # Enforce `return` statements in callbacks of array methods
+  # https://eslint.org/docs/rules/array-callback-return
+  array-callback-return: error
+
+  # Require `return` statements to either always or never specify values
+  # https://eslint.org/docs/rules/consistent-return
+  consistent-return: error
+
+  # Enforce consistent brace style for all control statements
+  # https://eslint.org/docs/rules/curly
+  curly: error
+
+  # Require `default` cases in `switch` statements
+  # https://eslint.org/docs/rules/default-case
+  default-case: error
+
+  # Enforce default clauses in switch statements to be last
+  # https://eslint.org/docs/rules/default-case-last
+  default-case-last: error
+
+  # Require the use of `===` and `!==`
+  # https://eslint.org/docs/rules/eqeqeq
+  eqeqeq: error
+
+  # Require grouped accessor pairs in object literals and classes
+  # https://eslint.org/docs/rules/grouped-accessor-pairs
+  grouped-accessor-pairs: error
+
+  # Require `for-in` loops to include an `if` statement
+  # https://eslint.org/docs/rules/guard-for-in
+  guard-for-in: error
+
+  # Disallow the use of `alert`, `confirm`, and `prompt`
+  # https://eslint.org/docs/rules/no-alert
+  no-alert: error
+
+  # Disallow the use of `arguments.caller` or `arguments.callee`
+  # https://eslint.org/docs/rules/no-caller
+  no-caller: error
+
+  # Disallow returning value from constructor
+  # https://eslint.org/docs/rules/no-constructor-return
+  no-constructor-return: error
+
+  # Disallow division operators explicitly at the beginning of regular expressions
+  # https://eslint.org/docs/rules/no-div-regex
+  no-div-regex: error
+
+  # Disallow the use of `eval()`
+  # https://eslint.org/docs/rules/no-eval
+  no-eval: error
+
+  # Disallow extending native types
+  # https://eslint.org/docs/rules/no-extend-native
+  no-extend-native: error
+
+  # Disallow unnecessary calls to `.bind()`
+  # https://eslint.org/docs/rules/no-extra-bind
+  no-extra-bind: error
+
+  # Disallow shorthand type conversions
+  # https://eslint.org/docs/rules/no-implicit-coercion
+  no-implicit-coercion: error
+
+  # Disallow declarations in the global scope
+  # https://eslint.org/docs/rules/no-implicit-globals
+  no-implicit-globals: error
+
+  # Disallow the use of `eval()`-like methods
+  # https://eslint.org/docs/rules/no-implied-eval
+  no-implied-eval: error
+
+  # Disallow the use of the `__iterator__` property
+  # https://eslint.org/docs/rules/no-iterator
+  no-iterator: error
+
+  # Disallow labeled statements
+  # https://eslint.org/docs/rules/no-labels
+  no-labels: error
+
+  # Disallow unnecessary nested blocks
+  # https://eslint.org/docs/rules/no-lone-blocks
+  no-lone-blocks: error
+
+  # Disallow multiline strings
+  # https://eslint.org/docs/rules/no-multi-str
+  no-multi-str: error
+
+  # Disallow `new` operators outside of assignments or comparisons
+  # https://eslint.org/docs/rules/no-new
+  no-new: error
+
+  # Disallow `new` operators with the `Function` object
+  # https://eslint.org/docs/rules/no-new-func
+  no-new-func: error
+
+  # Disallow `new` operators with the `String`, `Number`, and `Boolean` objects
+  # https://eslint.org/docs/rules/no-new-wrappers
+  no-new-wrappers: error
+
+  # Disallow octal escape sequences in string literals
+  # https://eslint.org/docs/rules/no-octal-escape
+  no-octal-escape: error
+
+  # Disallow reassigning `function` parameters
+  # https://eslint.org/docs/rules/no-param-reassign
+  no-param-reassign: error
+
+  # Disallow returning values from Promise executor functions
+  # https://eslint.org/docs/rules/no-promise-executor-return
+  no-promise-executor-return: error
+
+  # Disallow the use of the `__proto__` property
+  # https://eslint.org/docs/rules/no-proto
+  no-proto: error
+
+  # Disallow assignment operators in `return` statements
+  # https://eslint.org/docs/rules/no-return-assign
+  no-return-assign: error
+
+  # Disallow `javascript:` urls
+  # https://eslint.org/docs/rules/no-script-url
+  no-script-url: error
+
+  # Disallow comparisons where both sides are exactly the same
+  # https://eslint.org/docs/rules/no-self-compare
+  no-self-compare: error
+
+  # Disallow comma operators
+  # https://eslint.org/docs/rules/no-sequences
+  no-sequences: error
+
+  # Disallow throwing literals as exceptions
+  # https://eslint.org/docs/rules/no-throw-literal
+  no-throw-literal: error
+
+  # Disallow unmodified loop conditions
+  # https://eslint.org/docs/rules/no-unmodified-loop-condition
+  no-unmodified-loop-condition: error
+
+  # https://eslint.org/docs/rules/no-unreachable-loop
+  # Disallow loops with a body that allows only one iteration
+  no-unreachable-loop: error
+
+  # Disallow unnecessary calls to `.call()` and `.apply()`
+  # https://eslint.org/docs/rules/no-useless-call
+  no-useless-call: error
+
+  # Disallow unnecessary concatenation of literals or template literals
+  # https://eslint.org/docs/rules/no-useless-concat
+  no-useless-concat: error
+
+  # Disallow redundant return statements
+  # https://eslint.org/docs/rules/no-useless-return
+  no-useless-return: error
+
+  # Disallow `void` operators
+  # https://eslint.org/docs/rules/no-void
+  no-void:
+    - error
+    # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-floating-promises.md#ignorevoid
+    - allowAsStatement: true
+
+  # Enforce using named capture group in regular expression
+  # https://eslint.org/docs/rules/prefer-named-capture-group
+  # This is only available in ES2018. To this day (17 March 2020), all major
+  # browsers but Firefox have implemented it. TypeScript does not transpile
+  # named capture groups, so we cannot enforce this rule at the moment. See:
+  # - https://github.com/microsoft/TypeScript/issues/36132
+  # - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match#Browser_compatibility
+  # - https://caniuse.com/#feat=mdn-javascript_builtins_regexp_named_capture_groups
+  # prefer-named-capture-group: error
+
+  # Require using Error objects as Promise rejection reasons
+  # https://eslint.org/docs/rules/prefer-promise-reject-errors
+  prefer-promise-reject-errors: error
+
+  # Disallow use of the `RegExp` constructor in favor of regular expression literals
+  # https://eslint.org/docs/rules/prefer-regex-literals
+  prefer-regex-literals: error
+
+  # Enforce the consistent use of the radix argument when using `parseInt()`
+  # https://eslint.org/docs/rules/radix
+  radix: error
+
+  ## Variables
+  ## https://eslint.org/docs/rules/#variables
+
+  # Disallow initializing variables to `undefined`
+  # https://eslint.org/docs/rules/no-undef-init
+  no-undef-init: error
+
+  ## Stylistic Issues
+  ## https://eslint.org/docs/rules/#stylistic-issues
+
+  # Enforce consistent naming when capturing the current execution context
+  # https://eslint.org/docs/rules/consistent-this
+  consistent-this: error
+
+  # Require function names to match the name of the variable or property to which they are assigned
+  # https://eslint.org/docs/rules/func-name-matching
+  func-name-matching: error
+
+  # Require or disallow named `function` expressions
+  # https://eslint.org/docs/rules/func-names
+  func-names: error
+
+  # Enforce the consistent use of either `function` declarations or expressions
+  # https://eslint.org/docs/rules/func-style
+  # Configuration recommended at https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/ROADMAP.md#miscellaneous
+  func-style:
+    - error
+    - declaration
+    - allowArrowFunctions: true
+
+  # Require or disallow an empty line between class members
+  # https://eslint.org/docs/rules/lines-between-class-members
+  lines-between-class-members: error
+
+  # Require constructor names to begin with a capital letter
+  # https://eslint.org/docs/rules/new-cap
+  new-cap: error
+
+  # Disallow bitwise operators
+  # https://eslint.org/docs/rules/no-bitwise
+  no-bitwise: error
+
+  # Disallow `continue` statements
+  # https://eslint.org/docs/rules/no-continue
+  no-continue: error
+
+  # Disallow `if` statements as the only statement in `else` blocks
+  # https://eslint.org/docs/rules/no-lonely-if
+  no-lonely-if: error
+
+  # Disallow use of chained assignment expressions
+  # https://eslint.org/docs/rules/no-multi-assign
+  no-multi-assign: error
+
+  # Disallow negated conditions
+  # https://eslint.org/docs/rules/no-negated-condition
+  no-negated-condition: error
+
+  # Disallow `Object` constructors
+  # https://eslint.org/docs/rules/no-new-object
+  no-new-object: error
+
+  # Disallow the unary operators `++` and `--`
+  # https://eslint.org/docs/rules/no-plusplus
+  no-plusplus: error
+
+  # Disallow specified syntax
+  # https://eslint.org/docs/rules/no-restricted-syntax
+  # Configuration recommended at https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/ROADMAP.md#miscellaneous
+  no-restricted-syntax:
+    - error
+    - ForInStatement
+
+  # Disallow dangling underscores in identifiers
+  # https://eslint.org/docs/rules/no-underscore-dangle
+  no-underscore-dangle: error
+
+  # Disallow ternary operators when simpler alternatives exist
+  # https://eslint.org/docs/rules/no-unneeded-ternary
+  no-unneeded-ternary: error
+
+  # Require or disallow assignment operator shorthand where possible
+  # https://eslint.org/docs/rules/operator-assignment
+  operator-assignment: error
+
+  # Disallow the use of `Math.pow` in favor of the `**` operator
+  # https://eslint.org/docs/rules/prefer-exponentiation-operator
+  prefer-exponentiation-operator: error
+
+  # Disallow using Object.assign with an object literal as the first argument and prefer the use of object spread instead.
+  # https://eslint.org/docs/rules/prefer-object-spread
+  prefer-object-spread: error
+
+  # Enforce consistent spacing after the `//` or `/*` in a comment
+  # https://eslint.org/docs/rules/spaced-comment
+  spaced-comment: error
+
+  ## ECMAScript 6
+  ## https://eslint.org/docs/rules/#ecmascript-6
+
+  # Require braces in arrow function body
+  # https://eslint.org/docs/rules/arrow-body-style
+  arrow-body-style: error
+
+  # Disallow unnecessary computed property keys in objects and classes
+  # https://eslint.org/docs/rules/no-useless-computed-key
+  no-useless-computed-key: error
+
+  # Disallow renaming import, export, and destructured assignments to the same name
+  # https://eslint.org/docs/rules/no-useless-rename
+  no-useless-rename: error
+
+  # Require or disallow method and property shorthand syntax for object literals
+  # https://eslint.org/docs/rules/object-shorthand
+  object-shorthand: error
+
+  # Require using arrow functions for callbacks
+  # https://eslint.org/docs/rules/prefer-arrow-callback
+  prefer-arrow-callback: error
+
+  # Require destructuring from arrays and/or objects
+  # https://eslint.org/docs/rules/prefer-destructuring
+  prefer-destructuring:
+    - error
+    - array: false
+      object: true
+
+  # Disallow `parseInt()` and `Number.parseInt()` in favor of binary, octal, and hexadecimal literals
+  # https://eslint.org/docs/rules/prefer-numeric-literals
+  prefer-numeric-literals: error
+
+  # Require template literals instead of string concatenation
+  # https://eslint.org/docs/rules/prefer-template
+  prefer-template: error
+
+  # Enforce sorted import declarations within modules
+  # https://eslint.org/docs/rules/sort-imports
+  sort-imports:
+    - error
+    - ignoreCase: true
+      ignoreDeclarationSort: true
+
+  # Require symbol descriptions
+  # https://eslint.org/docs/rules/symbol-description
+  symbol-description: error
+
+  #########################
+  ## eslint-plugin-react ##
+  #########################
+
+  # Forbid "button" element without an explicit "type" attribute
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/button-has-type.md
+  react/button-has-type: error
+
+  # Prevent missing displayName in a React component definition
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/display-name.md
+  # Disabled as it is not helpful and may conflict with TS typing
+  react/display-name: off
+
+  # Forbid certain props on components
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/forbid-component-props.md
+  # FIXME: Enable in a latter pass
+  # react/forbid-component-props: error
+
+  # Standardize the way function component get defined (fixable)
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/function-component-definition.md
+  # Disabling this while figuring out the pattern we want to use universally.
+  # See https://github.com/CloudHealth/cht-ui-component-lib/pull/1090
+  # react/function-component-definition:
+  #   - error
+  #   - namedComponents: arrow-function
+  #     unnamedComponents: arrow-function
+
+  # Ensure destructuring and symmetric naming of useState hook value and setter variables
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/hook-use-state.md
+  react/hook-use-state: error
+
+  # Reports when this.state is accessed within setState
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-access-state-in-setstate.md
+  react/no-access-state-in-setstate: error
+
+  # Prevent adjacent inline elements not separated by whitespace.
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-adjacent-inline-elements.md
+  react/no-adjacent-inline-elements: error
+
+  # Prevent usage of dangerous JSX props
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-danger.md
+  react/no-danger: error
+
+  # Prevent usage of setState in componentDidMount
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-mount-set-state.md
+  react/no-did-mount-set-state: error
+
+  # Flag shouldComponentUpdate when extending PureComponent
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-redundant-should-component-update.md
+  react/no-redundant-should-component-update: error
+
+  # Report "this" being used in stateless components
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-this-in-sfc.md
+  react/no-this-in-sfc: error
+
+  # Prevent common typos
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-typos.md
+  react/no-typos: error
+
+  # Prevent usage of unsafe lifecycle methods
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unsafe.md
+  react/no-unsafe: error
+
+  # Prevent definition of unused state fields
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unused-state.md
+  react/no-unused-state: error
+
+  # Prevent usage of setState in componentWillUpdate
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-will-update-set-state.md
+  react/no-will-update-set-state: error
+
+  # Enforce ES5 or ES6 class for React Components
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md
+  react/prefer-es6-class: error
+
+  # Enforce stateless components to be written as a pure function
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md
+  react/prefer-stateless-function: error
+
+  # Prevent missing props validation in a React component definition
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prop-types.md
+  # Disabled as we do not use PropTypes
+  react/prop-types: off
+
+  # Prevent missing React when using JSX
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md
+  # We need to disable this to support the new JSX transform that does not
+  # require React in scope. In cases where it's needed (i.e. when the old
+  # transform is used), the TypeScript checker has our backs.
+  react/react-in-jsx-scope: off
+
+  # Prevent extra closing tags for components without children (fixable)
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md
+  react/self-closing-comp: error
+
+  # State initialization in an ES6 class component should be in a constructor
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/state-in-constructor.md
+  react/state-in-constructor:
+    - error
+    - never
+
+  # Defines where React component static properties should be positioned.
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/static-property-placement.md
+  react/static-property-placement: error
+
+  # Prevent passing of children to void DOM elements (e.g. `<br />`).
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/void-dom-elements-no-children.md
+  react/void-dom-elements-no-children: error
+
+  ## JSX-specific rules
+  ## https://github.com/yannickcr/eslint-plugin-react#jsx-specific-rules
+
+  # Enforce boolean attributes notation in JSX (fixable)
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-boolean-value.md
+  react/jsx-boolean-value: error
+
+  # Disallow unnecessary JSX expressions when literals alone are sufficient or enfore JSX expressions on literals in JSX children or attributes (fixable)
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-brace-presence.md
+  react/jsx-curly-brace-presence: error
+
+  # Enforce shorthand or standard form for React fragments (fixable)
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-fragments.md
+  react/jsx-fragments: error
+
+  # Enforce event handler naming conventions in JSX
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-handler-names.md
+  # TODO: Enable this rule when https://github.com/yannickcr/eslint-plugin-react/issues/2586 is fixed
+  # react/jsx-handler-names:
+  #   - error
+  #   - eventHandlerPrefix: '(handle|on|set)' # handleFoo should be the standard except when using React's setState hook or when passing down props
+  #     checkLocalVariables: true # Applies to all handlers, not just `this.handleFoo` (component methods)
+
+  # Prevents usage of Function.prototype.bind and arrow functions in React component props
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md
+  react/jsx-no-bind:
+    - error
+    - allowArrowFunctions: true
+
+  # Forbid `javascript:` URLs
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-script-url.md
+  react/jsx-no-script-url: error
+
+  # Prevent usage of unsafe `target='_blank'`
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md
+  # This is enabled in the recommended preset, but we are overriding it to enable it on spread attributes.
+  # See https://github.com/yannickcr/eslint-plugin-react/pull/2855#issuecomment-754718088
+  react/jsx-no-target-blank:
+    - error
+    - forms: true
+      warnOnSpreadAttributes: true
+
+  # Disallow unnecessary fragments (fixable)
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md
+  react/jsx-no-useless-fragment:
+    - error
+    - allowExpressions: true
+
+  # Enforce PascalCase for user-defined JSX components
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md
+  react/jsx-pascal-case: error
+
+  # Prevent JSX prop spreading
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md
+  react/jsx-props-no-spreading: error
+
+  # Enforce props alphabetical sorting (fixable)
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-sort-props.md
+  react/jsx-sort-props:
+    - error
+    - callbacksLast: true
+      ignoreCase: true
+      reservedFirst: true
+
+  ###############################
+  ## eslint-plugin-react-hooks ##
+  ###############################
+
+  # This rule requires us to rightfully disable it in most cases, which is a habit we are trying not to encourage
+  react-hooks/exhaustive-deps: off
+
+  ##########################
+  ## eslint-plugin-import ##
+  ##########################
+
+  ## Static analysis
+  ## https://github.com/benmosher/eslint-plugin-import#static-analysis
+
+  # Ensure named imports correspond to a named export in the remote file
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/named.md
+  # TODO: Remove when https://github.com/benmosher/eslint-plugin-import/pull/1726 is released
+  import/named: off
+
+  # Forbid import of modules using absolute paths
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-absolute-path.md
+  import/no-absolute-path: error
+
+  # Forbid `require()` calls with expressions
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-dynamic-require.md
+  import/no-dynamic-require: error
+
+  # Forbid webpack loader syntax in imports
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-webpack-loader-syntax.md
+  import/no-webpack-loader-syntax: error
+
+  # Forbid a module from importing itself
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-self-import.md
+  import/no-self-import: error
+
+  # Prevent unnecessary path segments in import and require statements
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-useless-path-segments.md
+  import/no-useless-path-segments:
+    - error
+    - noUselessIndex: true
+
+  ## Helpful warnings
+  ## https://github.com/benmosher/eslint-plugin-import#helpful-warnings
+
+  # Forbid the use of extraneous packages
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md
+  import/no-extraneous-dependencies: error
+
+  # Forbid the use of mutable exports with `var` or `let`.
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-mutable-exports.md
+  import/no-mutable-exports: error
+
+  ## Module systems
+  ## https://github.com/benmosher/eslint-plugin-import#module-systems
+
+  # Report CommonJS `require` calls and `module.exports` or `exports.*`.
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-commonjs.md
+  import/no-commonjs: error
+
+  # Report AMD `require` and `define` calls.
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-amd.md
+  import/no-amd: error
+
+  # No Node.js builtin modules.
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-nodejs-modules.md
+  import/no-nodejs-modules: error
+
+  ## Style guide
+  ## https://github.com/benmosher/eslint-plugin-import#style-guide
+
+  # Ensure all imports appear before other statements
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/first.md
+  import/first: error
+
+  # Ensure all exports appear after other statements
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/exports-last.md
+  # import/exports-last: error
+
+  # Forbid namespace (a.k.a. "wildcard" `*`) import
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-namespace.md
+  import/no-namespace: error
+
+  # Enforce a convention in module import order
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/order.md
+  import/order:
+    - error
+    - pathGroups:
+        - pattern: "@cht/**"
+          group: external
+          position: after
+        - pattern: "*.module.css"
+          patternOptions:
+            matchBase: true
+          group: unknown
+          position: after
+      pathGroupsExcludedImportTypes:
+        - builtin
+      newlines-between: always
+      alphabetize:
+        order: asc
+        caseInsensitive: true
+
+  # Enforce a newline after import statements
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/newline-after-import.md
+  import/newline-after-import: error
+
+  # Forbid unassigned imports
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-unassigned-import.md
+  import/no-unassigned-import:
+    - error
+    - allow:
+        - "@cht/ui-component-lib/dist/index.css" # TODO: This might go away someday soon (when CSS Modules have fully taken over)
+
+  # Reports use of a default export as a locally named import
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-named-default.md
+  import/no-named-default: error
+
+  # Forbid default exports
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-default-export.md
+  import/no-default-export: error
+
+  # Enforce a leading comment with the webpackChunkName for dynamic imports
+  # https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/dynamic-import-chunkname.md
+  import/dynamic-import-chunkname: error
+
+  ############################
+  ## eslint-plugin-jsx-a11y ##
+  ############################
+
+  # Enforce that a label tag has a text label and an associated control.
+  # https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-associated-control.md
+  # Clarity takes inputs and label slots and creates autogenerated id/for attribute, so this is unnecessary.
+  #   Devs should only be using inputs from Clarity or cht-ui-component-lib anyway
+  jsx-a11y/label-has-associated-control: off
+
+  # The `lang` prop on the `<html>` element must have a valid value based on ISO country and language codes.
+  # https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/lang.md
+  # TODO: Remove if/when https://github.com/evcohen/eslint-plugin-jsx-a11y/pull/671 makes it to the package
+  jsx-a11y/lang: error
+
+  # Enforce that autoFocus prop is not used on elements.
+  # https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-autofocus.md
+  # We currently rely on this for a few components involving the search input.
+  jsx-a11y/no-autofocus: off
+
+  # https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-onchange.md
+  # This rule has been deprecated and removed from the recommended preset, which needs a new release.
+  # See https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/398
+  jsx-a11y/no-onchange: off
+
+  ######################
+  ## eslint-plugin-es ##
+  ######################
+
+  ## ES2020
+
+  # Disallow nullish coalescing operators
+  # https://eslint-plugin-es.mysticatea.dev/rules/no-nullish-coalescing-operators.html
+  # This is correctly transpiled by TypeScript
+  es/no-nullish-coalescing-operators: off
+
+  # Disallow optional chaining
+  # https://eslint-plugin-es.mysticatea.dev/rules/no-optional-chaining.html
+  # This is correctly transpiled by TypeScript
+  es/no-optional-chaining: off
+
+  ## ES2019
+
+  # Disallow optional catch binding
+  # https://eslint-plugin-es.mysticatea.dev/rules/no-optional-catch-binding.html
+  # This is correctly transpiled by TypeScript
+  es/no-optional-catch-binding: off
+
+  ## ES2018
+
+  # Disallow async iteration
+  # https://eslint-plugin-es.mysticatea.dev/rules/no-async-iteration.html
+  # This is correctly transpiled by TypeScript
+  es/no-async-iteration: off
+
+  # Disallow rest/spread properties
+  # https://eslint-plugin-es.mysticatea.dev/rules/no-rest-spread-properties.html
+  # This is correctly transpiled by TypeScript
+  es/no-rest-spread-properties: off
+
+  ## ES2017
+
+  # Disallow async function declarations
+  # https://eslint-plugin-es.mysticatea.dev/rules/no-async-functions.html
+  # This is correctly transpiled by TypeScript
+  es/no-async-functions: off
+
+  # Disallow the Object.entries method
+  # https://eslint-plugin-es.mysticatea.dev/rules/no-object-entries.html
+  # Supported in all modern browsers except IE
+  # https://caniuse.com/#feat=object-entries
+  es/no-object-entries: off
+
+  # Disallow the Object.getOwnPropertyDescriptors method
+  # https://eslint-plugin-es.mysticatea.dev/rules/no-object-getownpropertydescriptors.html
+  # Supported in all modern browsers
+  # https://caniuse.com/#search=getOwnPropertyDescriptor
+  es/no-object-getownpropertydescriptors: off
+
+  # Disallow the Object.values method
+  # https://eslint-plugin-es.mysticatea.dev/rules/no-object-values.html
+  # Supported in all modern browsers except IE
+  # https://caniuse.com/#feat=object-values
+  es/no-object-values: off
+
+  # Disallow trailing commas in parameter/argument lists
+  # https://eslint-plugin-es.mysticatea.dev/rules/no-trailing-function-commas.html
+  # This is correctly transpiled by TypeScript
+  es/no-trailing-function-commas: off
+
+  ## ES2016
+
+  # The `no-2016` preset only contains the `es/no-exponential-operators` rule.
+  # Exponential operators `**` are supported by all modern browsers except IE,
+  # and correctly transpiled to `Math.pow` by TypeScript.
+
+  ######################################
+  ## @typescript-eslint/eslint-plugin ##
+  ######################################
+
+  ## https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#supported-rules
+
+  # Requires using either T[] or Array<T> for arrays
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/array-type.md
+  "@typescript-eslint/array-type": error
+
+  # Bans // @ts-<directive> comments from being used
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/ban-ts-comment.md
+  "@typescript-eslint/ban-ts-comment": error
+
+  # Bans `// tslint:<rule-flag>` comments from being used
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/ban-tslint-comment.md
+  "@typescript-eslint/ban-tslint-comment": error
+
+  # Ensures that literals on classes are exposed in a consistent style
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/class-literal-property-style.md
+  "@typescript-eslint/class-literal-property-style": error
+
+  # Enforce or disallow the use of the record type
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/consistent-indexed-object-style.md
+  "@typescript-eslint/consistent-indexed-object-style": error
+
+  # Consistent with type definition either interface or type
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/consistent-type-definitions.md
+  "@typescript-eslint/consistent-type-definitions": error
+
+  # Require explicit return and argument types on exported functions' and classes' public class methods
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-module-boundary-types.md
+  # We extensively rely on type inference, even for module boundaries, at least at the moment
+  "@typescript-eslint/explicit-module-boundary-types": off
+
+  # Require a consistent member declaration order
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/member-ordering.md
+  "@typescript-eslint/member-ordering": error
+
+  # Enforces using a particular method signature syntax.
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/method-signature-style.md
+  "@typescript-eslint/method-signature-style": error
+
+  # Enforces naming conventions for everything across a codebase
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
+  "@typescript-eslint/naming-convention":
+    - error
+    - selector: variable
+      format:
+        - camelCase
+        - PascalCase
+        - UPPER_CASE
+      leadingUnderscore: allow
+
+  # Requires that .toString() is only called on objects which provide useful information when stringified
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-base-to-string.md
+  "@typescript-eslint/no-base-to-string": error
+
+  # Disallow the delete operator with computed key expressions
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-dynamic-delete.md
+  "@typescript-eslint/no-dynamic-delete": error
+
+  # Forbids the use of classes as namespaces
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-extraneous-class.md
+  "@typescript-eslint/no-extraneous-class": error
+
+  # Disallow usage of the implicit `any` type in catch clauses
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-implicit-any-catch.md
+  "@typescript-eslint/no-implicit-any-catch": error
+
+  # Disallows usage of void type outside of generic or return types
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-invalid-void-type.md
+  "@typescript-eslint/no-invalid-void-type": error
+
+  # Avoid using promises in places not designed to handle them
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-misused-promises.md
+  # This option is enabled in the recommended-requiring-type-checking preset, but we need checksVoidReturn, e.g. to use setTimeout with an async function.
+  # See https://github.com/Microsoft/TypeScript/wiki/FAQ#why-are-functions-returning-non-void-assignable-to-function-returning-void
+  "@typescript-eslint/no-misused-promises":
+    - error
+    - checksVoidReturn: false
+
+  # Disallow the use of parameter properties in class constructors
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-parameter-properties.md
+  "@typescript-eslint/no-parameter-properties": error
+
+  # Disallow members of unions and intersections that do nothing or override type information
+  # https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-redundant-type-constituents.md
+  "@typescript-eslint/no-redundant-type-constituents": error
+
+  # Disallows invocation of require()
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-require-imports.md
+  "@typescript-eslint/no-require-imports": error
+
+  # Disallow throwing literals as exceptions
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-throw-literal.md
+  "@typescript-eslint/no-throw-literal": error
+
+  # Flags unnecessary equality comparisons against boolean literals
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unnecessary-boolean-literal-compare.md
+  "@typescript-eslint/no-unnecessary-boolean-literal-compare": error
+
+  # Prevents conditionals where the type is always truthy or always falsy
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unnecessary-condition.md
+  "@typescript-eslint/no-unnecessary-condition": error
+
+  # Warns when a namespace qualifier is unnecessary
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unnecessary-qualifier.md
+  "@typescript-eslint/no-unnecessary-qualifier": error
+
+  # Enforces that type arguments will not be used if not required
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unnecessary-type-arguments.md
+  "@typescript-eslint/no-unnecessary-type-arguments": error
+
+  # Disallows unnecessary constraints on generic types
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unnecessary-type-constraint.md
+  "@typescript-eslint/no-unnecessary-type-constraint": error
+
+  # Disallows assigning any to variables and properties
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unsafe-assignment.md
+  # We unfortunately have to disable this rule as it is too much dependent on proper types of third-parties
+  "@typescript-eslint/no-unsafe-assignment": off
+
+  # Disallows member access on any typed variables
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unsafe-member-access.md
+  # We unfortunately have to disable this rule as it is too much dependent on proper types of third-parties
+  "@typescript-eslint/no-unsafe-member-access": off
+
+  # Prefer a ‘for-of’ loop over a standard ‘for’ loop if the index is only used to access the array being iterated
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-for-of.md
+  "@typescript-eslint/prefer-for-of": error
+
+  # Use function types instead of interfaces with call signatures
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-function-type.md
+  "@typescript-eslint/prefer-function-type": error
+
+  # Enforce `includes` method over `indexOf` method
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-includes.md
+  "@typescript-eslint/prefer-includes": error
+
+  # Require that all enum members be literal values to prevent unintended enum member name shadow issues
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-literal-enum-member.md
+  "@typescript-eslint/prefer-literal-enum-member": error
+
+  # Enforce the usage of the nullish coalescing operator instead of logical chaining
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-nullish-coalescing.md
+  # FIXME: Has to be disabled until fixed. See https://github.com/typescript-eslint/typescript-eslint/issues/1768
+  #        This issue has been closed as they removed the auto-fixer, but the bug still persists
+  # '@typescript-eslint/prefer-nullish-coalescing': error
+
+  # Prefer using concise optional chain expressions instead of chained logical ands
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-optional-chain.md
+  "@typescript-eslint/prefer-optional-chain": error
+
+  # Requires that private members are marked as readonly if they're never modified outside of the constructor
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-readonly.md
+  "@typescript-eslint/prefer-readonly": error
+
+  # Prefer using type parameter when calling Array#reduce instead of casting
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-reduce-type-parameter.md
+  "@typescript-eslint/prefer-reduce-type-parameter": error
+
+  # Enforce the use of `String#startsWith` and `String#endsWith` instead of other equivalent methods of checking substrings
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-string-starts-ends-with.md
+  "@typescript-eslint/prefer-string-starts-ends-with": error
+
+  # Requires any function or method that returns a Promise to be marked async
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/promise-function-async.md
+  "@typescript-eslint/promise-function-async": error
+
+  # Requires Array#sort calls to always provide a compareFunction
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/require-array-sort-compare.md
+  "@typescript-eslint/require-array-sort-compare": error
+
+  # Exhaustiveness checking in switch with union type
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/switch-exhaustiveness-check.md
+  "@typescript-eslint/switch-exhaustiveness-check": error
+
+  # Enforces unbound methods are called with their expected scope
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/unbound-method.md
+  # We have to disable this to be able to pass methods/handlers as props
+  "@typescript-eslint/unbound-method": off
+
+  # Warns for any two overloads that could be unified into one by using a union or an optional/rest parameter
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/unified-signatures.md
+  "@typescript-eslint/unified-signatures": error
+
+  ## Extension Rules
+  ## https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#extension-rules
+
+  # Enforce default parameters to be last
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/default-param-last.md
+  "@typescript-eslint/default-param-last": error
+
+  # Enforce dot notation whenever possible
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/dot-notation.md
+  "@typescript-eslint/dot-notation": error
+
+  # Disallow duplicate class members
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-dupe-class-members.md
+  "@typescript-eslint/no-dupe-class-members": error
+
+  # Disallow duplicate module imports
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-duplicate-imports.md
+  "@typescript-eslint/no-duplicate-imports": error
+
+  # Disallow variable declarations from shadowing variables declared in the outer scope
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-shadow.md
+  "@typescript-eslint/no-shadow": error
+
+  # Disallow unused expressions
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-expressions.md
+  "@typescript-eslint/no-unused-expressions": error
+
+  # Disallow unused variables
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-vars.md
+  # Mostly a duplicate of TS, currently flags variables starting with an underscore, and likely to flag false positives.
+  # See https://github.com/typescript-eslint/typescript-eslint/issues/1772#issuecomment-616885810
+  "@typescript-eslint/no-unused-vars": off
+
+  # Disallow unnecessary constructors
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-useless-constructor.md
+  "@typescript-eslint/no-useless-constructor": error
+
+  # Disallow empty exports that don't change anything in a module file
+  # https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-useless-empty-export.md
+  "@typescript-eslint/no-useless-empty-export": error
+
+  # Enforces consistent returning of awaited values
+  # https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/return-await.md
+  "@typescript-eslint/return-await": error
