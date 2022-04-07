@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import React from "react";
 
 export const PlaygroundNew = () => {
-  const [cells, setcells] = useState()
-    return (
-    <div>PlaygroundNew</div>
-  )
-}
+  // const [cells, setcells] = useState()
+  return <div>PlaygroundNew</div>;
+};

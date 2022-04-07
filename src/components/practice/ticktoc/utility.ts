@@ -13,4 +13,4 @@ export function getPlayerList(): readonly Player[] {
   ];
 }
 
-function getArena() {}
+// function getArena() {}

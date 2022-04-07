@@ -3,7 +3,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import webpack from "webpack";
 
 const configuration: webpack.Configuration = {
-  entry: "./src/index.tsx",
+  entry: "./src/index.js",
   mode: "development",
   module: {
     rules: [
